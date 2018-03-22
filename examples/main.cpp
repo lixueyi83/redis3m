@@ -31,7 +31,13 @@ void publisher()
 int main(int argc, char **argv)
 {
     std::thread th = std::thread(subscriber);
+    
+      /* There has to be a delay between subscribe and publish operation,
+        otherwise, the publish operation will happen prior to the subscribe
+        eventually no message captured.
+      */
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    
     publisher();
     
     th.join();
